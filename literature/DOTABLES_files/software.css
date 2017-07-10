@@ -1,0 +1,39 @@
+/* styles for water.usgs.gov/software/ */
+
+ul li.binary, ul li.pdf, ul li.ps {
+	position: relative;
+	left: -1.5em !important; /* IE 6 Hack */
+	left: -0.5em;
+	padding: 0 0 0.6em 2em ;
+	margin: 0 0 0 -0.5em;
+	list-style: none;
+}
+
+ul li.binary {
+	background: url("/software/icons/binary.png") no-repeat 0 0;
+}
+ul li.pdf {
+	background: url("/software/icons/pdf.png") no-repeat 0 0;
+}
+ul li.ps {
+	background: url("/software/icons/postscript.png") no-repeat 0 0;
+}
+
+/* category navbar */
+ul#categories {
+	background: #000000;
+	padding: 5px;
+}
+ul#categories li {
+	display:inline;
+	padding-right: 2em;
+}
+ul#categories li a {
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+}
+ul#categories li a:hover {
+	text-decoration: underline;
+	color: orange;
+}
