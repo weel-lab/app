@@ -14,7 +14,7 @@ library("stringr")
 library("lubridate")
 
 #global graph settings (font size, etc.)
-theme_set(theme_gray(base_size = 16)) #theme_gray is the default theme
+theme_set(theme_gray(base_size = 18)) #theme_gray is the default theme
 
 #import app results spreadsheets
 app_timeseries <- read.csv('~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/results/tr_app_timeseries.csv', stringsAsFactors = FALSE)
@@ -70,9 +70,37 @@ print(respiration_timeseries_plot)
 ```
 
 ```{r}
+#anpp and respiration plot
+anpp_respiration_timeseries_plot <- ggplot(data = app_timeseries, aes(x = date)) + #calls ggplot and stores the call in a graphics object called "app_timeseries_plot"
+  geom_point(aes(y = anpp_mean, color = "ANPP"), size = 3)+ 
+  geom_errorbar(mapping=aes(x=date, ymin=anpp_mean-anpp_std_err, ymax=anpp_mean+anpp_std_err), width=7, size=0.5, color="dark green")+
+  geom_point(aes(y = respiration_mean, color = "Respiration"), size = 3)+ 
+  geom_errorbar(mapping=aes(x=date, ymin=respiration_mean-respiration_std_err, ymax=respiration_mean+respiration_std_err), width=7, size=0.5, color="dark blue")+
+  geom_hline(yintercept = 0, size = 0.5, color = "black")+
+  #formatting commands below
+  scale_x_date(date_breaks="1 month", date_labels ="%b-%y", limit = c(as.Date("2017-05-01"), as.Date("2017-12-01")))+ #sets the scale for x axis
+  ylim(c(-0.2,0.8))+ #defines upper and lower bound of y scale (otherwise R just guesses)
+  labs(x = "Date", y = "Respiration (mg/hr)")+ #sets labels for each axes
+  theme(legend.position=c(0.9,0.9))+ #positions read as (x,y), where x = 0 is left, y = 0 is bottom
+  theme(legend.key=element_rect(fill='white'))+
+  theme(legend.box.spacing=unit(0, "cm"))+
+  theme(panel.background = element_rect(fill = 'white'))+
+  theme(axis.line.x = element_line())+
+  theme(axis.line.y = element_line())+
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))+ #sets the margin around the plot area; note: arugments correspond to (top, right, bottom, left)
+  scale_color_manual("", 
+                      values = c("ANPP" = "dark green", "Respiration"="dark blue")) #defines a color scale for each data series and generates a legend
+
+print(anpp_respiration_timeseries_plot)
+```
+
+
+
+```{r}
 #exporting graphics
 
 ggsave("tr_anpp_timeseries.eps", anpp_timeseries_plot, width = 8, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
 ggsave("tr_respiration_timeseries.eps", respiration_timeseries_plot, width = 8, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
+ggsave("tr_anpp_respiration_timeseries.eps", anpp_respiration_timeseries_plot, width = 8, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
 
 ```
