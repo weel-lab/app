@@ -14,7 +14,7 @@ library("stringr")
 library("lubridate")
 
 #global graph settings (font size, etc.)
-theme_set(theme_gray(base_size = 18)) #theme_gray is the default theme
+theme_set(theme_gray(base_size = 25)) #theme_gray is the default theme
 
 #import app results spreadsheets
 app_timeseries <- read.csv('~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/results/tr_app_timeseries.csv', stringsAsFactors = FALSE)
@@ -80,7 +80,7 @@ anpp_respiration_timeseries_plot <- ggplot(data = app_timeseries, aes(x = date))
   #formatting commands below
   scale_x_date(date_breaks="1 month", date_labels ="%b-%y", limit = c(as.Date("2017-05-01"), as.Date("2017-12-01")))+ #sets the scale for x axis
   ylim(c(-0.2,0.8))+ #defines upper and lower bound of y scale (otherwise R just guesses)
-  labs(x = "Date", y = "Respiration (mg/hr)")+ #sets labels for each axes
+  labs(x = "Date", y = "ANPP & Respiration (mg/L*hr)")+ #sets labels for each axes
   theme(legend.position=c(0.9,0.9))+ #positions read as (x,y), where x = 0 is left, y = 0 is bottom
   theme(legend.key=element_rect(fill='white'))+
   theme(legend.box.spacing=unit(0, "cm"))+
@@ -101,6 +101,6 @@ print(anpp_respiration_timeseries_plot)
 
 ggsave("tr_anpp_timeseries.eps", anpp_timeseries_plot, width = 8, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
 ggsave("tr_respiration_timeseries.eps", respiration_timeseries_plot, width = 8, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
-ggsave("tr_anpp_respiration_timeseries.eps", anpp_respiration_timeseries_plot, width = 8, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
+ggsave("tr_anpp_respiration_timeseries.eps", anpp_respiration_timeseries_plot, width = 12, path = '~/Google Drive/WEEL/Tres Rios/datasets/tr-aquatic-primary-productivity/graphics/')
 
 ```
